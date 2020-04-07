@@ -31,20 +31,25 @@ export default {
     }
   },
   async mounted () {
-    let self = this
     const image = document.getElementById('image')
     await new Promise((resolve, reject) => {
-      this.cropper = new Cropper(image, {
-        aspectRatio: 16 / 9,
-        ready (e) {
-          resolve(true)
-        },
-        cropend (e) {
-          console.log('e: ', e)
-        },
-        crop (e) {
-        }
-      })  
+      try {
+        this.cropper = new Cropper(image, {
+          aspectRatio: 16 / 9,
+          ready (e) {
+            console.log(e) // eslint-disable-line
+            resolve(true)
+          },
+          cropend (e) {
+            console.log('e: ', e)
+          },
+          crop (e) {
+            console.log(e) // eslint-disable-line
+          }
+        })
+      } catch (err) {
+        reject(err)
+      }
     })
     // this.cropper.clear()
     // console.log(this.cropper)
